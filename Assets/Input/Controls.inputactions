@@ -13,6 +13,15 @@
                     "processors": "",
                     "interactions": "Hold",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "rotation",
+                    "type": "Button",
+                    "id": "f7a6abec-702b-470d-8978-62f8e993db8d",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -39,35 +48,35 @@
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Down",
-                    "id": "16864ca2-1872-466c-aff6-616ec7ecd6f7",
-                    "path": "<Keyboard>/s",
-                    "interactions": "",
+                    "name": "2D Vector",
+                    "id": "f751449f-d3fd-4b36-a423-47c18cf6c1cf",
+                    "path": "2DVector",
+                    "interactions": "Hold",
                     "processors": "",
-                    "groups": "player",
-                    "action": "movement",
-                    "isComposite": false,
-                    "isPartOfComposite": true
+                    "groups": "",
+                    "action": "rotation",
+                    "isComposite": true,
+                    "isPartOfComposite": false
                 },
                 {
-                    "name": "Left",
-                    "id": "0e838a53-ed8f-49d5-8a7e-08bfdae4b725",
+                    "name": "left",
+                    "id": "c99e607e-ffc5-4428-84e7-7bf66abc965e",
                     "path": "<Keyboard>/a",
                     "interactions": "",
                     "processors": "",
                     "groups": "player",
-                    "action": "movement",
+                    "action": "rotation",
                     "isComposite": false,
                     "isPartOfComposite": true
                 },
                 {
-                    "name": "Right",
-                    "id": "7d6edb24-e7bd-44ae-8db9-3cec63f29b84",
+                    "name": "right",
+                    "id": "78013d73-1edd-46fc-a1fd-3a3122ecaa72",
                     "path": "<Keyboard>/d",
                     "interactions": "",
                     "processors": "",
                     "groups": "player",
-                    "action": "movement",
+                    "action": "rotation",
                     "isComposite": false,
                     "isPartOfComposite": true
                 }
