@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
@@ -8,6 +9,12 @@ public class Player : MonoBehaviour
     void Start()
     {
         
+    }
+
+    public void OnMovevemt(InputAction.CallbackContext action)
+    {
+        print("YO");
+        print(action);
     }
 
     // Update is called once per frame
