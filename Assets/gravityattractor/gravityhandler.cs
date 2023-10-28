@@ -8,7 +8,8 @@ public class gravityhandler : MonoBehaviour
 
     private Rigidbody2D rb;
     private Rigidbody2D ply_rb; //Player rb
-    private Player player;
+    public Player player;
+    public  int threshold = 10;
     [SerializeField] float revSpeed = 4f;
     [SerializeField] public float mass = 1; //radius  * 2
 
@@ -19,7 +20,6 @@ public class gravityhandler : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
-        player = GetComponent<Player>();
         ply_rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>(); //only one instance must exist for this to work
     }
     public void AddGravityForce(Rigidbody2D target)
@@ -54,22 +54,57 @@ public class gravityhandler : MonoBehaviour
     {
         //calculate the angle between the players rotation and the circles tangent at the players position
         Vector2 point = rb.ClosestPoint(ply_rb.position);
-        print(point);
-        //float slope_angle = Mathf.Deg2Rad * Mathf.Atan(- ((rb.centerOfMass.x - point.x)/ (rb.centerOfMass.y - point.y))) ; //in degrees
-        float slope_angle = Mathf.Abs( Vector3.Angle(point.normalized, Vector3.up) );
-        float deg_diff = Mathf.Abs( Mathf.Abs(slope_angle) - (Mathf.Abs( ply_rb.rotation) % 180));
-        
+        //print(point);
+        ////float slope_angle = Mathf.Deg2Rad * Mathf.Atan(- ((rb.centerOfMass.x - point.x)/ (rb.centerOfMass.y - point.y))) ; //in degrees
+        //float slope_angle = Vector3.Angle(point.normalized, Vector3.up);
+        //float deg_diff = Mathf.Abs( Mathf.Abs(slope_angle) - (Mathf.Abs( ply_rb.rotation) % 180));
 
-        print("rotation:");
-        print(ply_rb.rotation);
-        print("----");
-        print(slope_angle);
-        print(deg_diff);
-        print("----");
-        //Vector3 normal = (.position - transform.position).normalized;
-        //Vector3 up = new Vector3(0, 0, 1); // up side of your circle
-        //Vector3 tangent = Vector3.Cross(normal, up);
-        if (ply_rb.velocity.magnitude < .09 && deg_diff <= 18)
+
+        //print("rotation:");
+        //print(ply_rb.rotation);
+        //print("----");
+        //print(slope_angle);
+        //print(deg_diff);
+        //print("----");
+        ////Vector3 normal = (.position - transform.position).normalized;
+        ////Vector3 up = new Vector3(0, 0, 1); // up side of your circle
+        ////Vector3 tangent = Vector3.Cross(normal, up);
+        //if (ply_rb.velocity.magnitude < .09 && deg_diff <= 18)
+        //{
+        //    //print(ply_rb.velocity.magnitude);
+        //    Debug.Log("win");
+        //}
+        //else
+        //{
+        //    //print(ply_rb.velocity.magnitude);
+        //    Debug.Log("lose");
+        //}
+
+        Vector2 centerToEdge = rb.worldCenterOfMass - point;
+        print(point);
+        //10 threshold
+        centerToEdge.Normalize();
+
+        print("center to edge");
+        centerToEdge = -centerToEdge;
+        print(centerToEdge);
+        var ang = Mathf.Asin(centerToEdge.x) * Mathf.Rad2Deg;
+        if (centerToEdge.y < 0)
+        {
+            ang = 180 - ang;
+        }
+        else
+        {
+            if (centerToEdge.x < 0)
+            {
+                ang = 360 + ang;
+            }
+        }
+        print(ang);
+        int thresh_ind = 360 - threshold;
+        float deg_diff = Mathf.Abs(  ((360 - player.transform.rotation.eulerAngles.z) % (thresh_ind)) -  (ang % thresh_ind)   );
+
+        if (ply_rb.velocity.magnitude < .09 && deg_diff <= 10)
         {
             //print(ply_rb.velocity.magnitude);
             Debug.Log("win");
@@ -79,8 +114,6 @@ public class gravityhandler : MonoBehaviour
             //print(ply_rb.velocity.magnitude);
             Debug.Log("lose");
         }
-
-
     }
 
     // Update is called once per frame
