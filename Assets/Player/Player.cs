@@ -5,16 +5,16 @@ using UnityEngine.InputSystem;
 
 public class Player : MonoBehaviour
 {
-    private float alpha = .05f;
+    private float alpha = .1f;
     private Vector2 acc; //acceleration
     private Vector2 velocity;
-    private Rigidbody2D rb;
+    public Rigidbody2D rb;
     //private float rotationSpeed = 5;
     private float rotation_x;
     // Start is called before the first frame update
     void Start()
     {
-        rb = GetComponent<Rigidbody2D>();
+        rb = this.GetComponent<Rigidbody2D>();
     }
 
     public void OnMovevemt(InputAction.CallbackContext action)
@@ -35,10 +35,18 @@ public class Player : MonoBehaviour
     }
 
     // Update is called once per frame
+    void OnCollisionEnter2D(Collision2D collision)
+    {
+        print("here");
+        rb.velocity = new Vector2(0.0f, 0.0f);
+        rb.angularVelocity = 0f;
+        rb.rotation = 0.0f;
+    }
+
     void Update()
     {
         velocity += acc;
         rb.MovePosition(rb.position + velocity * Time.deltaTime);
-        transform.Rotate(new Vector3(0, 0, -rotation_x) * Time.deltaTime * 50, Space.World);
+        rb.MoveRotation(rb.rotation -rotation_x * Time.deltaTime * 150);
     }
 }

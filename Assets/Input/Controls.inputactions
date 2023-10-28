@@ -51,7 +51,7 @@
                     "name": "2D Vector",
                     "id": "f751449f-d3fd-4b36-a423-47c18cf6c1cf",
                     "path": "2DVector",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "processors": "",
                     "groups": "",
                     "action": "rotation",
