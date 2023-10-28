@@ -9,9 +9,11 @@ public class gravityhandler : MonoBehaviour
     private Rigidbody2D rb;
     private Rigidbody2D ply_rb; //Player rb
     private Player player;
+    [SerializeField] float revSpeed = 4f;
+    [SerializeField] public float mass = 1; //radius  * 2
 
     private float gravityDampener = 0.2f;
-    static float k = 5;
+    public static float k = 4f;
 
     // Start is called before the first frame update
     void Start()
@@ -23,10 +25,10 @@ public class gravityhandler : MonoBehaviour
     public void AddGravityForce(Rigidbody2D target)
     {
         float distance = Vector3.Distance(rb.position, target.position);
-        print(distance);
+        //print(distance);
         if (distance <= 10)
         {
-            float massprod = rb.mass * target.mass * k;
+            float massprod = mass * target.mass * k;
 
 
 
@@ -40,10 +42,51 @@ public class gravityhandler : MonoBehaviour
         }
 
     }
+    void OnCollisionEnter2D(Collision2D col)
+    {
+        //Debug.Log("OnCollisionEnter2D");
+
+        WinLose(col);
+
+    }
+
+    public void WinLose(Collision2D col)
+    {
+        //calculate the angle between the players rotation and the circles tangent at the players position
+        Vector2 point = rb.ClosestPoint(ply_rb.position);
+        print(point);
+        //float slope_angle = Mathf.Deg2Rad * Mathf.Atan(- ((rb.centerOfMass.x - point.x)/ (rb.centerOfMass.y - point.y))) ; //in degrees
+        float slope_angle = Mathf.Abs( Vector3.Angle(point.normalized, Vector3.up) );
+        float deg_diff = Mathf.Abs( Mathf.Abs(slope_angle) - (Mathf.Abs( ply_rb.rotation) % 180));
+        
+
+        print("rotation:");
+        print(ply_rb.rotation);
+        print("----");
+        print(slope_angle);
+        print(deg_diff);
+        print("----");
+        //Vector3 normal = (.position - transform.position).normalized;
+        //Vector3 up = new Vector3(0, 0, 1); // up side of your circle
+        //Vector3 tangent = Vector3.Cross(normal, up);
+        if (ply_rb.velocity.magnitude < .09 && deg_diff <= 18)
+        {
+            //print(ply_rb.velocity.magnitude);
+            Debug.Log("win");
+        }
+        else
+        {
+            //print(ply_rb.velocity.magnitude);
+            Debug.Log("lose");
+        }
+
+
+    }
 
     // Update is called once per frame
-    void Update()
+    void FixedUpdate()
     {
         AddGravityForce(ply_rb);
+        rb.MoveRotation(rb.rotation + revSpeed * Time.fixedDeltaTime);
     }
 }
