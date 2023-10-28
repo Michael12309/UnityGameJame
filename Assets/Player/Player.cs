@@ -11,7 +11,7 @@ public class Player : MonoBehaviour
     public Sprite sprite4;
 
     [SerializeField]
-    public float dampener = 0.2f;
+    public float dampener = 0.3f;
 
     private float thrustInput;
     private float turnInput;
