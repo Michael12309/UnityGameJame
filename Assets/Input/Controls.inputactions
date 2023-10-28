@@ -9,9 +9,9 @@
                     "name": "movement",
                     "type": "Value",
                     "id": "50225751-1608-41a0-b103-ee3c11451eb5",
-                    "expectedControlType": "",
+                    "expectedControlType": "Button",
                     "processors": "",
-                    "interactions": "Hold",
+                    "interactions": "",
                     "initialStateCheck": true
                 },
                 {
@@ -40,6 +40,17 @@
                     "name": "Up",
                     "id": "db4915fb-d97a-4501-84d7-7f30fe14f513",
                     "path": "<Keyboard>/w",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "player",
+                    "action": "movement",
+                    "isComposite": false,
+                    "isPartOfComposite": true
+                },
+                {
+                    "name": "down",
+                    "id": "c0e7350b-f38f-464a-b2f9-5b1da1bb6eb1",
+                    "path": "<Keyboard>/s",
                     "interactions": "",
                     "processors": "",
                     "groups": "player",
@@ -84,11 +95,6 @@
         }
     ],
     "controlSchemes": [
-        {
-            "name": "New control scheme",
-            "bindingGroup": "New control scheme",
-            "devices": []
-        },
         {
             "name": "player",
             "bindingGroup": "player",
