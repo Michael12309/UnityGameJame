@@ -121,7 +121,7 @@ public class gravityhandler : MonoBehaviour
             //print(ply_rb.velocity.magnitude);
             if (is_visited == false)
             {
-                player.fuel += 50;
+                player.fuel += 75;
                 is_visited = true;
                 print("now visited");
                 player.planet_count += 1;
