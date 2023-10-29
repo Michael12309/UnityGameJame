@@ -17,6 +17,8 @@ public class gravityhandler : MonoBehaviour
     public AudioSource crash;
     public AudioSource land;
 
+    private SpriteRenderer minimapSprite;
+
 
     //public good_landing lander_text;
 
@@ -32,6 +34,8 @@ public class gravityhandler : MonoBehaviour
         //lander_text = lander_text.GetComponent<good_landing>();
 
         ply_rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>(); //only one instance must exist for this to work
+
+        minimapSprite = transform.GetChild(0).GetComponent<SpriteRenderer>();
     }
     public void AddGravityForce(Rigidbody2D target)
     {
@@ -128,6 +132,7 @@ public class gravityhandler : MonoBehaviour
                 player.visit_fade = true;
 
                 land.Play();
+                minimapSprite.color = new Color(208f / 255f, 129f / 255f, 89f / 255f, 255f / 255f);
             }
 
 
