@@ -2,18 +2,25 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using TMPro;
 
 public class Player : MonoBehaviour
 {
+    public TMP_Text text;
+
     public Sprite sprite1;
     public Sprite sprite2;
     public Sprite sprite3;
     public Sprite sprite4;
 
     [SerializeField]
-    public float dampener = 0.3f;
+    public float dampener = 0.4f;
     [SerializeField]
     public float turnSpeed = 1.2f;
+
+    [SerializeField]
+    public float fuel = 230f;
+    private float fuelDecrease = 0f;
 
     private float thrustInput;
     private float turnInput;
@@ -23,16 +30,21 @@ public class Player : MonoBehaviour
 
     private int thrustAmount = 0;
 
+    private Vector2 calculatedAcceleration = Vector2.zero;
+    private Vector2 lastVelocity = Vector2.zero;
+
     // Start is called before the first frame update
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
         sr = this.GetComponent<SpriteRenderer>();
+
+        InvokeRepeating("UpdateText", 0, 0.1f);
     }
 
     public void OnMovevemt(InputAction.CallbackContext action)
     {
-        if (action.performed)
+        if (action.performed && fuel > 0)
         {
             thrustInput = action.ReadValue<Vector2>().y;
             thrustAmount += (int)thrustInput;
@@ -40,14 +52,27 @@ public class Player : MonoBehaviour
             
             //float radians = (transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad;
             //acc = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * alpha * action.action.ReadValue<Vector2>().y;
+            
             if (thrustAmount == 0)
+            {
+                fuelDecrease = 0f;
                 sr.sprite = sprite1;
+            }
             if (thrustAmount == 1)
+            {
+                fuelDecrease = 0.01f;
                 sr.sprite = sprite2;
+            }
             if (thrustAmount == 2)
+            {
+                fuelDecrease = 0.02f;
                 sr.sprite = sprite3;
+            }
             if (thrustAmount == 3)
+            {
+                fuelDecrease = 0.03f;
                 sr.sprite = sprite4;
+            }
         }
     }
 
@@ -62,7 +87,31 @@ public class Player : MonoBehaviour
 
     void FixedUpdate()
     {
+        if (fuel <= 0)
+            thrustAmount = 0;
+        
         rb.AddRelativeForce(Vector2.up * thrustAmount * dampener);
         rb.MoveRotation(rb.rotation + -turnInput * turnSpeed);
+    }
+
+    void UpdateText()
+    {
+        calculatedAcceleration = (rb.velocity - lastVelocity) / Time.deltaTime;
+        lastVelocity = rb.velocity;
+        if (fuel <= 0)
+        {
+            fuel = 0;
+            sr.sprite = sprite1;
+        }
+        else
+        {
+            fuel -= fuelDecrease;
+        }
+
+        text.text = "Fuel:                 " + fuel.ToString("F2") + "\n" +
+                    "Velocity:          " + rb.velocity + "\n" +
+                    "Acceleration:  " + calculatedAcceleration;
+
+
     }
 }
