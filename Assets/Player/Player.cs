@@ -32,7 +32,7 @@ public class Player : MonoBehaviour
 
     private float thrustInput;
     private float turnInput;
-    
+
     private Rigidbody2D rb;
     public SpriteRenderer sr;
 
@@ -41,10 +41,12 @@ public class Player : MonoBehaviour
     private Vector2 calculatedAcceleration = Vector2.zero;
     private Vector2 lastVelocity = Vector2.zero;
 
+    public AudioSource thrustAudio;
+
     // Start is called before the first frame update
     void Start()
     {
-        
+
         rb = this.GetComponent<Rigidbody2D>();
         sr = this.GetComponent<SpriteRenderer>();
 
@@ -58,10 +60,10 @@ public class Player : MonoBehaviour
             thrustInput = action.ReadValue<Vector2>().y;
             thrustAmount += (int)thrustInput;
             thrustAmount = (int)Mathf.Clamp((float)thrustAmount, 0f, 3f);
-            
+
             //float radians = (transform.rotation.eulerAngles.z + 90) * Mathf.Deg2Rad;
             //acc = new Vector2(Mathf.Cos(radians), Mathf.Sin(radians)) * alpha * action.action.ReadValue<Vector2>().y;
-            
+
             if (thrustAmount == 0)
             {
                 fuelDecrease = 0f;
@@ -101,7 +103,7 @@ public class Player : MonoBehaviour
     {
         if (fuel <= 0)
             thrustAmount = 0;
-        
+
         rb.AddRelativeForce(Vector2.up * thrustAmount * dampener);
         rb.MoveRotation(rb.rotation + -turnInput * turnSpeed);
     }
@@ -124,6 +126,15 @@ public class Player : MonoBehaviour
                     "Velocity:              " + rb.velocity + "\n" +
                     "Acceleration:  " + calculatedAcceleration;
 
+        if (fuelDecrease > 0f)
+        {
+            thrustAudio.volume = fuelDecrease / 4f;
+            thrustAudio.Play();
+        }
+        else
+        {
+            thrustAudio.Stop();
+        }
 
     }
 }
