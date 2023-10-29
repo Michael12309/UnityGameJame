@@ -14,6 +14,9 @@ public class gravityhandler : MonoBehaviour
     [SerializeField] float revSpeed = 7f;
     [SerializeField] public float mass = 1; //radius  * 2
 
+    public AudioSource crash;
+    public AudioSource land;
+
 
     //public good_landing lander_text;
 
@@ -116,21 +119,25 @@ public class gravityhandler : MonoBehaviour
         if (ply_rb.velocity.magnitude <= speedThreshold && (degreeDifference <= degreeThreshold || degreeDifference >= (360 - degreeThreshold)))
         {
             //print(ply_rb.velocity.magnitude);
-            if (is_visited == false) {
+            if (is_visited == false)
+            {
                 player.fuel += 50;
                 is_visited = true;
                 print("now visited");
                 player.planet_count += 1;
                 player.visit_fade = true;
+
+                land.Play();
             }
 
-            
+
             //lander_text.planet_text.text = "The Eagle has landed!";
         }
         else
         {
             //print(ply_rb.velocity.magnitude);
             Debug.Log("lose");
+            crash.Play();
         }
     }
 
