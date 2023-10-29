@@ -101,10 +101,25 @@ public class gravityhandler : MonoBehaviour
             }
         }
         print(ang);
-        int thresh_ind = 360 - threshold;
-        float deg_diff = Mathf.Abs(  ((360 - player.transform.rotation.eulerAngles.z) % (thresh_ind)) -  (ang % thresh_ind)   );
+        
 
-        if (ply_rb.velocity.magnitude < .09 && deg_diff <= 10)
+        float player_rotation = player.transform.rotation.eulerAngles.z;
+
+        print(player_rotation);
+        float deg_diff;
+        if ((360 - Mathf.Abs((360-player_rotation) - ang)) <= threshold)
+        {
+            print("here");
+            deg_diff = 0;
+        }
+        else {
+            deg_diff = Mathf.Abs((360 -player_rotation) - ang);
+            print(deg_diff);
+        }
+
+        //print(deg_diff);
+
+        if (ply_rb.velocity.magnitude < .09 && deg_diff <= threshold)
         {
             //print(ply_rb.velocity.magnitude);
             Debug.Log("win");
