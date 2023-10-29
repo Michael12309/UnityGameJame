@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 {
     public TMP_Text text;
 
+    public int planet_count = 0;
+
     //public TMP_Text visit_text;
     public bool visit_fade = false;
     public Sprite sprite1;
@@ -63,17 +65,17 @@ public class Player : MonoBehaviour
             }
             if (thrustAmount == 1)
             {
-                fuelDecrease = 0.01f;
+                fuelDecrease = 0.40f;
                 sr.sprite = sprite2;
             }
             if (thrustAmount == 2)
             {
-                fuelDecrease = 0.02f;
+                fuelDecrease = 0.60f;
                 sr.sprite = sprite3;
             }
             if (thrustAmount == 3)
             {
-                fuelDecrease = 0.03f;
+                fuelDecrease = 1.0f;
                 sr.sprite = sprite4;
             }
         }
