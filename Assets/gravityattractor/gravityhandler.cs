@@ -6,7 +6,7 @@ using UnityEngine;
 public class gravityhandler : MonoBehaviour
 {
     private bool is_visited = false;
-    
+    private bool crash_count = false;
     private Rigidbody2D rb;
     private Rigidbody2D ply_rb; //Player rb
     public Player player;
@@ -144,7 +144,13 @@ public class gravityhandler : MonoBehaviour
         {
             //print(ply_rb.velocity.magnitude);
             Debug.Log("lose");
-            crash.Play();
+            if (crash_count == false)
+            {
+                crash.Play();
+                crash_count = true;
+            }
+            
+
             player.is_dead = true;
             player.sr.sprite = player.sprite_dead;
             
