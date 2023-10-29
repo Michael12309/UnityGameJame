@@ -16,6 +16,6 @@ public class follow_player : MonoBehaviour
     void Update()
     {
         this.transform.position = new Vector3(player.position.x, player.position.y, this.transform.position.z);
-        //transform.rotation = player.transform.rotation;
+        //transform.rotation = Quaternion.Euler(0f, 0f, player.rotation.eulerAngles.z);
     }
 }

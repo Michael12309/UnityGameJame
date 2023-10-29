@@ -26,8 +26,7 @@ public class gravityhandler : MonoBehaviour
     public void AddGravityForce(Rigidbody2D target)
     {
         float distance = Vector3.Distance(rb.position, target.position);
-        //print(distance);
-        if (distance <= 10)
+        if (distance <= 10 * mass)
         {
             float massprod = mass * target.mass * k;
 
