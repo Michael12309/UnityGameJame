@@ -6,6 +6,7 @@ using UnityEngine;
 public class gravityhandler : MonoBehaviour
 {
     private bool is_visited = false;
+    
     private Rigidbody2D rb;
     private Rigidbody2D ply_rb; //Player rb
     public Player player;
@@ -129,6 +130,7 @@ public class gravityhandler : MonoBehaviour
 
                 land.Play();
             }
+            print("win");
 
 
             //lander_text.planet_text.text = "The Eagle has landed!";
@@ -138,6 +140,9 @@ public class gravityhandler : MonoBehaviour
             //print(ply_rb.velocity.magnitude);
             Debug.Log("lose");
             crash.Play();
+            player.is_dead = true;
+            player.sr.sprite = player.sprite_dead;
+            
         }
     }
 

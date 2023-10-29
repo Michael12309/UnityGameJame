@@ -10,12 +10,16 @@ public class Player : MonoBehaviour
 
     public int planet_count = 0;
 
+    public bool is_dead = false;
+
     //public TMP_Text visit_text;
     public bool visit_fade = false;
     public Sprite sprite1;
     public Sprite sprite2;
     public Sprite sprite3;
     public Sprite sprite4;
+
+    public Sprite sprite_dead;
 
     [SerializeField]
     public float dampener = 0.4f;
@@ -30,7 +34,7 @@ public class Player : MonoBehaviour
     private float turnInput;
     
     private Rigidbody2D rb;
-    private SpriteRenderer sr;
+    public SpriteRenderer sr;
 
     private int thrustAmount = 0;
 
@@ -49,7 +53,7 @@ public class Player : MonoBehaviour
 
     public void OnMovevemt(InputAction.CallbackContext action)
     {
-        if (action.performed && fuel > 0)
+        if (is_dead == false && action.performed && fuel > 0)
         {
             thrustInput = action.ReadValue<Vector2>().y;
             thrustAmount += (int)thrustInput;
@@ -83,7 +87,10 @@ public class Player : MonoBehaviour
 
     public void OnRotation(InputAction.CallbackContext action)
     {
-        turnInput = action.ReadValue<Vector2>().x;
+        if (is_dead == false)
+        {
+            turnInput = action.ReadValue<Vector2>().x;
+        }
     }
 
     void Update()
