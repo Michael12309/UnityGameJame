@@ -9,7 +9,8 @@ public class gravityhandler : MonoBehaviour
     private Rigidbody2D rb;
     private Rigidbody2D ply_rb; //Player rb
     public Player player;
-    public  int threshold = 10;
+    public float degreeThreshold = 10;
+    public float speedThreshold = .15f;
     [SerializeField] float revSpeed = 4f;
     [SerializeField] public float mass = 1; //radius  * 2
 
@@ -82,7 +83,6 @@ public class gravityhandler : MonoBehaviour
 
         Vector2 centerToEdge = rb.worldCenterOfMass - point;
         print(point);
-        //10 threshold
         centerToEdge.Normalize();
 
         print("center to edge");
@@ -100,26 +100,14 @@ public class gravityhandler : MonoBehaviour
                 ang = 360 + ang;
             }
         }
-        print(ang);
-        
 
-        float player_rotation = player.transform.rotation.eulerAngles.z;
+        float playerAngle = 360 - player.transform.rotation.eulerAngles.z;
+        print("hit angle:    " + ang);
+        print("player angle: " + playerAngle);
+        print("speed:  " + ply_rb.velocity.magnitude);
+        float degreeDifference = Mathf.Abs(playerAngle - ang);
 
-        print(player_rotation);
-        float deg_diff;
-        if ((360 - Mathf.Abs((360-player_rotation) - ang)) <= threshold)
-        {
-            print("here");
-            deg_diff = 0;
-        }
-        else {
-            deg_diff = Mathf.Abs((360 -player_rotation) - ang);
-            print(deg_diff);
-        }
-
-        //print(deg_diff);
-
-        if (ply_rb.velocity.magnitude < .09 && deg_diff <= threshold)
+        if (ply_rb.velocity.magnitude <= speedThreshold && (degreeDifference <= degreeThreshold || degreeDifference >= (360 - degreeThreshold)))
         {
             //print(ply_rb.velocity.magnitude);
             Debug.Log("win");
@@ -135,6 +123,6 @@ public class gravityhandler : MonoBehaviour
     void FixedUpdate()
     {
         AddGravityForce(ply_rb);
-        rb.MoveRotation(rb.rotation + revSpeed * Time.fixedDeltaTime);
+        //rb.MoveRotation(rb.rotation + revSpeed * Time.fixedDeltaTime);
     }
 }
