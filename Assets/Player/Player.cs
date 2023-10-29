@@ -12,6 +12,8 @@ public class Player : MonoBehaviour
 
     [SerializeField]
     public float dampener = 0.3f;
+    [SerializeField]
+    public float turnSpeed = 1.2f;
 
     private float thrustInput;
     private float turnInput;
@@ -61,6 +63,6 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         rb.AddRelativeForce(Vector2.up * thrustAmount * dampener);
-        rb.MoveRotation(rb.rotation + -turnInput);
+        rb.MoveRotation(rb.rotation + -turnInput * turnSpeed);
     }
 }
