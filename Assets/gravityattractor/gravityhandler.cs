@@ -120,6 +120,7 @@ public class gravityhandler : MonoBehaviour
                 player.fuel += 50;
                 is_visited = true;
                 print("now visited");
+                player.planet_count += 1;
                 player.visit_fade = true;
             }
 
