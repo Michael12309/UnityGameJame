@@ -5,14 +5,17 @@ using UnityEngine;
 
 public class gravityhandler : MonoBehaviour
 {
-
+    private bool is_visited = false;
     private Rigidbody2D rb;
     private Rigidbody2D ply_rb; //Player rb
     public Player player;
     public float degreeThreshold = 10;
-    public float speedThreshold = .15f;
-    [SerializeField] float revSpeed = 4f;
+    public float speedThreshold = .35f;
+    [SerializeField] float revSpeed = 7f;
     [SerializeField] public float mass = 1; //radius  * 2
+
+
+    //public good_landing lander_text;
 
     private float gravityDampener = 0.2f;
     public static float k = 4f;
@@ -21,6 +24,10 @@ public class gravityhandler : MonoBehaviour
     void Start()
     {
         rb = this.GetComponent<Rigidbody2D>();
+        player = player.GetComponent<Player>();
+
+        //lander_text = lander_text.GetComponent<good_landing>();
+
         ply_rb = GameObject.FindGameObjectWithTag("Player").GetComponent<Rigidbody2D>(); //only one instance must exist for this to work
     }
     public void AddGravityForce(Rigidbody2D target)
@@ -81,12 +88,12 @@ public class gravityhandler : MonoBehaviour
         //}
 
         Vector2 centerToEdge = rb.worldCenterOfMass - point;
-        print(point);
+        //print(point);
         centerToEdge.Normalize();
 
-        print("center to edge");
+        //print("center to edge");
         centerToEdge = -centerToEdge;
-        print(centerToEdge);
+        //print(centerToEdge);
         var ang = Mathf.Asin(centerToEdge.x) * Mathf.Rad2Deg;
         if (centerToEdge.y < 0)
         {
@@ -100,16 +107,24 @@ public class gravityhandler : MonoBehaviour
             }
         }
 
-        float playerAngle = 360 - player.transform.rotation.eulerAngles.z;
-        print("hit angle:    " + ang);
-        print("player angle: " + playerAngle);
-        print("speed:  " + ply_rb.velocity.magnitude);
+        float playerAngle = 360 - ply_rb.transform.rotation.eulerAngles.z;
+        //print("hit angle:    " + ang);
+        //print("player angle: " + playerAngle);
+        //print("speed:  " + ply_rb.velocity.magnitude);
         float degreeDifference = Mathf.Abs(playerAngle - ang);
 
         if (ply_rb.velocity.magnitude <= speedThreshold && (degreeDifference <= degreeThreshold || degreeDifference >= (360 - degreeThreshold)))
         {
             //print(ply_rb.velocity.magnitude);
-            Debug.Log("win");
+            if (is_visited == false) {
+                player.fuel += 50;
+                is_visited = true;
+                print("now visited");
+                
+            }
+
+            
+            //lander_text.planet_text.text = "The Eagle has landed!";
         }
         else
         {
@@ -122,6 +137,6 @@ public class gravityhandler : MonoBehaviour
     void FixedUpdate()
     {
         AddGravityForce(ply_rb);
-        //rb.MoveRotation(rb.rotation + revSpeed * Time.fixedDeltaTime);
+        rb.MoveRotation(rb.rotation + revSpeed * Time.fixedDeltaTime);
     }
 }

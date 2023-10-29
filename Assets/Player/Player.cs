@@ -36,6 +36,7 @@ public class Player : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
+        
         rb = this.GetComponent<Rigidbody2D>();
         sr = this.GetComponent<SpriteRenderer>();
 
