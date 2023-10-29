@@ -108,8 +108,8 @@ public class Player : MonoBehaviour
             fuel -= fuelDecrease;
         }
 
-        text.text = "Fuel:                 " + fuel.ToString("F2") + "\n" +
-                    "Velocity:          " + rb.velocity + "\n" +
+        text.text = "Fuel:                       " + fuel.ToString("F2") + "\n" +
+                    "Velocity:              " + rb.velocity + "\n" +
                     "Acceleration:  " + calculatedAcceleration;
 
 
