@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 {
     public TMP_Text text;
 
+    //public TMP_Text visit_text;
+    public bool visit_fade = false;
     public Sprite sprite1;
     public Sprite sprite2;
     public Sprite sprite3;

@@ -8,22 +8,25 @@ public class good_landing : MonoBehaviour
     // Start is called before the first frame update
     public TMP_Text planet_text;
 
+
+    public Player player;
+
     public float fadetime;
-    public bool fadingin;
-    public bool fadingin_fail_win;
-    public bool succ = false;
     void Start()
     {
+        planet_text.text = "The Eagle has landed! Planet visited!";
         planet_text.CrossFadeAlpha(0, 0.0f, false);
+        player = player.GetComponent<Player>();
         fadetime = 0;
-        fadingin = false;
+
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (fadingin)
+        if (player.visit_fade)
         {
+
             FadeIn();
         }
         else if (planet_text.color.a != 0)
@@ -34,17 +37,7 @@ public class good_landing : MonoBehaviour
 
         }
 
-        if (fadingin_fail_win)
-        {
-            FadeIn();
-        }
-        else if (planet_text.color.a != 0)
-        {
 
-            planet_text.CrossFadeAlpha(0, 0.5f, false);
-
-
-        }
     }
 
 
@@ -57,7 +50,7 @@ public class good_landing : MonoBehaviour
         if (planet_text.color.a == 1 && fadetime > 1.5f)
         {
 
-            fadingin = false;
+            player.visit_fade = false;
             fadetime = 0;
 
         }

@@ -462,7 +462,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &384065607
 RectTransform:
   m_ObjectHideFlags: 0
@@ -737,6 +737,7 @@ GameObject:
   - component: {fileID: 576903164}
   - component: {fileID: 576903163}
   - component: {fileID: 576903165}
+  - component: {fileID: 576903166}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -757,6 +758,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   text: {fileID: 1876124739}
+  visit_fade: 0
   sprite1: {fileID: 21300000, guid: ecb8ba06c80e3ef43a13d353090fa822, type: 3}
   sprite2: {fileID: 21300000, guid: 38405a677c3bd384ca92902a3936f395, type: 3}
   sprite3: {fileID: 21300000, guid: 7538aaf32120d1c438205a8539a38cb0, type: 3}
@@ -981,6 +983,21 @@ MonoBehaviour:
   planet_text: {fileID: 1951680420}
   fadetime: 0
   fadingin: 0
+--- !u!114 &576903166
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 576903158}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab5dd0c18a2b34d7ea6a761df010194e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  planet_text: {fileID: 384065608}
+  player: {fileID: 576903159}
+  fadetime: 0
 --- !u!1 &670475127
 GameObject:
   m_ObjectHideFlags: 0
