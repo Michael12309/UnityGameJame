@@ -8,6 +8,8 @@ public class Player : MonoBehaviour
 {
     public TMP_Text text;
 
+    public TMP_Text winText;
+
     public int planet_count = 0;
 
     public bool is_dead = false;
@@ -51,6 +53,7 @@ public class Player : MonoBehaviour
         sr = this.GetComponent<SpriteRenderer>();
 
         InvokeRepeating("UpdateText", 0, 0.1f);
+        winText.enabled = false;
     }
 
     public void OnMovevemt(InputAction.CallbackContext action)
@@ -136,5 +139,11 @@ public class Player : MonoBehaviour
             thrustAudio.Stop();
         }
 
+
+        print(planet_count);
+        if (planet_count >= 5)
+        {
+            winText.enabled = true;
+        }
     }
 }
