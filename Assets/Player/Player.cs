@@ -97,6 +97,7 @@ public class Player : MonoBehaviour
 
     public void OnRotation(InputAction.CallbackContext action)
     {
+        
         if (is_dead == false)
         {
             turnInput = action.ReadValue<Vector2>().x;

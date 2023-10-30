@@ -137,9 +137,10 @@ public class gravityhandler : MonoBehaviour
 
                     land.Play();
                     minimapSprite.color = new Color(208f / 255f, 129f / 255f, 89f / 255f, 255f / 255f);
-                    player.landed = true;
+                    
                 }
                 print("win");
+                player.landed = true;
 
 
                 //lander_text.planet_text.text = "The Eagle has landed!";
