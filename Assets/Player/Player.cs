@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
     public void OnRotation(InputAction.CallbackContext action)
     {
         
-        if (is_dead == false)
+        if (is_dead == false && landed == false)
         {
             turnInput = action.ReadValue<Vector2>().x;
         }
@@ -111,7 +111,11 @@ public class Player : MonoBehaviour
     void FixedUpdate()
     {
         if (fuel <= 0)
+        {
             thrustAmount = 0;
+            rest.Setup();
+            is_dead = true;
+        }
 
         rb.AddRelativeForce(Vector2.up * thrustAmount * dampener);
         rb.MoveRotation(rb.rotation + -turnInput * turnSpeed);

@@ -155,7 +155,7 @@ public class gravityhandler : MonoBehaviour
                     crash_count = true;
                 }
 
-
+                player.landed = true;
                 player.is_dead = true;
                 player.sr.sprite = player.sprite_dead;
 
