@@ -69,7 +69,7 @@ public class gravityhandler : MonoBehaviour
     public void WinLose(Collision2D col)
     {
         //calculate the angle between the players rotation and the circles tangent at the players position
-        if (player.landed == false)
+        if (player.landed == false && player.is_dead == false)
         {
             Vector2 point = rb.ClosestPoint(ply_rb.position);
             //print(point);
