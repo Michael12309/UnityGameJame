@@ -8,6 +8,10 @@ public class Player : MonoBehaviour
 {
     public TMP_Text text;
 
+    public bool landed = false;
+
+    public restart rest;
+
     public TMP_Text winText;
 
     public int planet_count = 0;
@@ -58,6 +62,7 @@ public class Player : MonoBehaviour
 
     public void OnMovevemt(InputAction.CallbackContext action)
     {
+        landed = false;
         if (is_dead == false && action.performed && fuel > 0)
         {
             thrustInput = action.ReadValue<Vector2>().y;
@@ -144,6 +149,8 @@ public class Player : MonoBehaviour
         if (planet_count >= 5)
         {
             winText.enabled = true;
+
+            rest.Setup();
         }
     }
 }

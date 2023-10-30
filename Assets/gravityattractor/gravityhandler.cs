@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class gravityhandler : MonoBehaviour
 {
+    public restart rest;
     private bool is_visited = false;
     private bool crash_count = false;
     private Rigidbody2D rb;
@@ -68,92 +69,97 @@ public class gravityhandler : MonoBehaviour
     public void WinLose(Collision2D col)
     {
         //calculate the angle between the players rotation and the circles tangent at the players position
-        Vector2 point = rb.ClosestPoint(ply_rb.position);
-        //print(point);
-        ////float slope_angle = Mathf.Deg2Rad * Mathf.Atan(- ((rb.centerOfMass.x - point.x)/ (rb.centerOfMass.y - point.y))) ; //in degrees
-        //float slope_angle = Vector3.Angle(point.normalized, Vector3.up);
-        //float deg_diff = Mathf.Abs( Mathf.Abs(slope_angle) - (Mathf.Abs( ply_rb.rotation) % 180));
-
-
-        //print("rotation:");
-        //print(ply_rb.rotation);
-        //print("----");
-        //print(slope_angle);
-        //print(deg_diff);
-        //print("----");
-        ////Vector3 normal = (.position - transform.position).normalized;
-        ////Vector3 up = new Vector3(0, 0, 1); // up side of your circle
-        ////Vector3 tangent = Vector3.Cross(normal, up);
-        //if (ply_rb.velocity.magnitude < .09 && deg_diff <= 18)
-        //{
-        //    //print(ply_rb.velocity.magnitude);
-        //    Debug.Log("win");
-        //}
-        //else
-        //{
-        //    //print(ply_rb.velocity.magnitude);
-        //    Debug.Log("lose");
-        //}
-
-        Vector2 centerToEdge = rb.worldCenterOfMass - point;
-        //print(point);
-        centerToEdge.Normalize();
-
-        //print("center to edge");
-        centerToEdge = -centerToEdge;
-        //print(centerToEdge);
-        var ang = Mathf.Asin(centerToEdge.x) * Mathf.Rad2Deg;
-        if (centerToEdge.y < 0)
+        if (player.landed == false)
         {
-            ang = 180 - ang;
-        }
-        else
-        {
-            if (centerToEdge.x < 0)
+            Vector2 point = rb.ClosestPoint(ply_rb.position);
+            //print(point);
+            ////float slope_angle = Mathf.Deg2Rad * Mathf.Atan(- ((rb.centerOfMass.x - point.x)/ (rb.centerOfMass.y - point.y))) ; //in degrees
+            //float slope_angle = Vector3.Angle(point.normalized, Vector3.up);
+            //float deg_diff = Mathf.Abs( Mathf.Abs(slope_angle) - (Mathf.Abs( ply_rb.rotation) % 180));
+
+
+            //print("rotation:");
+            //print(ply_rb.rotation);
+            //print("----");
+            //print(slope_angle);
+            //print(deg_diff);
+            //print("----");
+            ////Vector3 normal = (.position - transform.position).normalized;
+            ////Vector3 up = new Vector3(0, 0, 1); // up side of your circle
+            ////Vector3 tangent = Vector3.Cross(normal, up);
+            //if (ply_rb.velocity.magnitude < .09 && deg_diff <= 18)
+            //{
+            //    //print(ply_rb.velocity.magnitude);
+            //    Debug.Log("win");
+            //}
+            //else
+            //{
+            //    //print(ply_rb.velocity.magnitude);
+            //    Debug.Log("lose");
+            //}
+
+            Vector2 centerToEdge = rb.worldCenterOfMass - point;
+            //print(point);
+            centerToEdge.Normalize();
+
+            //print("center to edge");
+            centerToEdge = -centerToEdge;
+            //print(centerToEdge);
+            var ang = Mathf.Asin(centerToEdge.x) * Mathf.Rad2Deg;
+            if (centerToEdge.y < 0)
             {
-                ang = 360 + ang;
+                ang = 180 - ang;
             }
-        }
-
-        float playerAngle = 360 - ply_rb.transform.rotation.eulerAngles.z;
-        //print("hit angle:    " + ang);
-        //print("player angle: " + playerAngle);
-        //print("speed:  " + ply_rb.velocity.magnitude);
-        float degreeDifference = Mathf.Abs(playerAngle - ang);
-
-        if (ply_rb.velocity.magnitude <= speedThreshold && (degreeDifference <= degreeThreshold || degreeDifference >= (360 - degreeThreshold)))
-        {
-            //print(ply_rb.velocity.magnitude);
-            if (is_visited == false)
+            else
             {
-                player.fuel += 75;
-                is_visited = true;
-                print("now visited");
-                player.planet_count += 1;
-                player.visit_fade = true;
-
-                land.Play();
-                minimapSprite.color = new Color(208f / 255f, 129f / 255f, 89f / 255f, 255f / 255f);
+                if (centerToEdge.x < 0)
+                {
+                    ang = 360 + ang;
+                }
             }
-            print("win");
 
+            float playerAngle = 360 - ply_rb.transform.rotation.eulerAngles.z;
+            //print("hit angle:    " + ang);
+            //print("player angle: " + playerAngle);
+            //print("speed:  " + ply_rb.velocity.magnitude);
+            float degreeDifference = Mathf.Abs(playerAngle - ang);
 
-            //lander_text.planet_text.text = "The Eagle has landed!";
-        }
-        else
-        {
-            //print(ply_rb.velocity.magnitude);
-            Debug.Log("lose");
-            if (crash_count == false)
+            if (ply_rb.velocity.magnitude <= speedThreshold && (degreeDifference <= degreeThreshold || degreeDifference >= (360 - degreeThreshold)))
             {
-                crash.Play();
-                crash_count = true;
-            }
-            
+                //print(ply_rb.velocity.magnitude);
+                if (is_visited == false)
+                {
+                    player.fuel += 75;
+                    is_visited = true;
+                    print("now visited");
+                    player.planet_count += 1;
+                    player.visit_fade = true;
 
-            player.is_dead = true;
-            player.sr.sprite = player.sprite_dead;
-            
+                    land.Play();
+                    minimapSprite.color = new Color(208f / 255f, 129f / 255f, 89f / 255f, 255f / 255f);
+                    player.landed = true;
+                }
+                print("win");
+
+
+                //lander_text.planet_text.text = "The Eagle has landed!";
+            }
+            else
+            {
+                //print(ply_rb.velocity.magnitude);
+                Debug.Log("lose");
+                if (crash_count == false)
+                {
+                    crash.Play();
+                    crash_count = true;
+                }
+
+
+                player.is_dead = true;
+                player.sr.sprite = player.sprite_dead;
+
+                rest.Setup();
+            }
         }
     }
 
